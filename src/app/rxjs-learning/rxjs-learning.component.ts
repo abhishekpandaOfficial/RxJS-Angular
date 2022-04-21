@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-rxjs-learning',
@@ -22,15 +22,31 @@ export class RxjsLearningComponent implements OnInit {
     {Id:3,Name:'Janaki Lata Panda',Gender:'Female'},
   )
 
+
+   /* ------------------ from () Operator -----------*/
+
   OrderStatus =['Order-InProgress','Order-Placed','Order-Delivered','Feedback']
 
-  orderDetails = of(this.OrderStatus);
+  orderDetails$: Observable<string> = from(this.OrderStatus);
+  OrderNames!:string;
+
 
   constructor() { }
 
   ngOnInit(): void {
 // **************************************** Need to Subscribe the for the Observable ***********************
-this.orderDetails.subscribe(data=>
+
+this.orderDetails$.subscribe(data=>{
+
+  setInterval(()=>
+  {
+    this.OrderNames = data;
+  }, 3000)
+  
+})
+
+
+this.student$.subscribe(data=>
   {
     setInterval(()=>{
      console.log(data);
